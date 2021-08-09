@@ -7,30 +7,30 @@
   <title>Welcome to Yu Liu's Homepage</title>
 
   <!-- styles -->
-  {% style """/assets/bulma/css/bulma.min.css" %}
-  {% style """/assets/material-icons/css/material-icons.min.css" %}
-
-  {% style """/css/screen.css" %}
+  <link href='https://fonts.googleapis.com/css?family=Arbutus+Slab:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+  {% style """/css/pico.css" %}
 </head>
 
 <body>
   <!-- navbar -->
-  <nav class="navbar is-info">
+  <nav>
     <div class="container">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/" style="font-weight:bold;">Yu Liu</a>
-        <span class="navbar-burger burger" data-target="nav-menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
-      </div>
-      <div id="nav-menu" class="navbar-menu">
-        <div class="navbar-start">
-          <a href="/" class="navbar-item{% ifequal page " home.html" %} is-active{%endifequal%}">Home</a>
-          <a href="/about" class="navbar-item{% ifequal page " about.html" %} is-active{%endifequal%}">About</a>
-        </div>
-      </div>
+      <ul>
+        <li>
+          <strong>Yu Liu</strong>
+        </li>
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/papers">Papers</a>
+        </li>
+        <li>
+          <a href="/about">About</a>
+        </li>
+      </ul>
+    </div>
     </div>
   </nav>
 
