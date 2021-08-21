@@ -1,4 +1,4 @@
-<h1 class="title"><b>Yu Liu</b>'s Personal Page</h1>
+<h1 class="title"> <b>刘昱 • Yu Liu</b>'s Personal Page</h1>
 
 
 <img src="/img/yuicon.jpg" height=150px width=150px></img>
