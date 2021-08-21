@@ -9,7 +9,7 @@
    [ring.util.http-response :as response]))
 
 (defn home-page [request]
-  (log/info  (request :request-method) "[<-]" (request :remote-addr) "[@@]" (get (request :headers) "user-agent")
+  (log/info  (request :request-method) "[<-]" (request :X-Real-IP) "[@@]" (get (request :headers) "user-agent")
    "[lan]" (get (request :headers) "accept-language"))
   (layout/render request "home.html" {:docs (-> "docs/docs.md" io/resource slurp)}))
 
