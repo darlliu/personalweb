@@ -1,5 +1,6 @@
 (ns yuyu.routes.home
   (:require
+   [clojure.tools.logging :as log]
    [yuyu.layout :as layout]
    [yuyu.db.core :as db]
    [clojure.java.io :as io]
@@ -8,6 +9,8 @@
    [ring.util.http-response :as response]))
 
 (defn home-page [request]
+  (log/info  (request :request-method) "[<-]" (request :remote-addr) "[@@]" (get (request :headers) "user-agent")
+   "[lan]" (get (request :headers) "accept-language"))
   (layout/render request "home.html" {:docs (-> "docs/docs.md" io/resource slurp)}))
 
 (defn papers-page [request]
