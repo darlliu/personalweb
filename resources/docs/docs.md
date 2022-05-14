@@ -6,7 +6,7 @@
 <article>**About Me**: Software engineer at Google, AdsAI. Previously ML Engineer LinkedIn. 
 
 PhD in Computer Science at UC Irvine (2018), BSc in Biochemistry at Rice University (2012). 
-10+ years experience in programming and working with data. 15+ papers, 600+ citations.
+10+ years experience in programming and working with data. 15+ papers, 600+ citations, H-index 10 (as of 2022).
 
 I use this website to provide access to my info, contact and full papers.
 </article>
@@ -20,19 +20,12 @@ Reach me at the following links. I have no other social media presence and my re
 * [GitHub](https://github.com/darlliu)
 * [Google Scholar](https://scholar.google.com/citations?user=4CDnUJEAAAAJ&hl=en)
 * [Research Gate](https://www.researchgate.net/profile/Yu-Liu-17)
+* [Publons/Web of Science](https://publons.com/researcher/C-3867-2016/)
 
 
 ###### Publications
 
 As an author I provide full pdfs to all my academic publications [here](/papers). All of them are open access.
-
-###### Messages
-
-Please feel free to leave a message anonymously or with your alias here (under construction).
-
-###### Blog
-
-I'd like to share some blog posts in the future. They will be short guides or some other useful info.
 
 ###### Email
 
