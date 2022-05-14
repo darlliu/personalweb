@@ -3,7 +3,7 @@
 
 <img src="/img/yuicon.jpg" height=150px width=150px></img>
 
-<article>**About Me**: Software engineer at Google, AdsAI. Previously ML Engineer LinkedIn. 
+<article>**About Me**: Software engineer at Google, AdsAI. Previously ML Engineer at LinkedIn. 
 
 PhD in Computer Science at UC Irvine (2018), BSc in Biochemistry at Rice University (2012). 
 10+ years experience in programming and working with data. 15+ papers, 600+ citations.
