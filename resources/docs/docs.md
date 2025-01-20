@@ -6,7 +6,22 @@
 <article>**About Me**: Software engineer at Google, AdsAI. Previously ML Engineer at LinkedIn. 
 
 PhD in Computer Science at UC Irvine (2018), BSc in Biochemistry at Rice University (2012). 
-10+ years experience in programming and working with data. 15+ papers, 600+ citations, H-index 10 (as of 2022).
+15+ years experience in programming and AI. 15+ papers, 1,000+ citations, H-index 15.
+
+ML Expertise:
+  * Ultra large scale (petaFlops++) model training and data processing. 
+  * Industry leading large scale model theoretical development and implementation.
+  * Auction, recommendation and ranking systems.
+  * Loss engineering, transfer learning, and online learning.
+  * Heterogeneous model architectures, cascading models, foundation models.
+  * Large transformer models.
+  * Industry scale user modeling.
+
+Other Exerience:
+  * Applicative machine learning and statistics
+  * Bioinformatics and systems biology
+  * Python, C++ and java programming
+  * Open source ML systems (tensorflow, torch)
 
 I use this website to provide access to my info, contact and full papers.
 </article>
