@@ -1,16 +1,16 @@
 <h1 class="title"> <b>刘昱 • Yu Liu</b>'s Personal Page</h1>
 
 <div class="grid">
+<div class="container">
 <img src="/img/yuicon.jpg" height=300px width=300px></img>
-
-<div class="shark-logo">
-  <div class="shark-body">
-    <div class="tail"></div>
-    <div class="fin"></div>
-    <div class="eye"></div>
-  </div>
-  <div class="scanline"></div>
 </div>
+<div class="container">
+  <div class="logo">
+    <div class="shark"></div>
+    <div class="logo-text">SHARK</div>
+  </div>
+</div>
+
 </div>
 <article>**About Me**: Software engineer at Google, AdsAI. Previously ML Engineer at LinkedIn. 
 
