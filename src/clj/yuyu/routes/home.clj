@@ -21,7 +21,7 @@
 (defn about-page [request]
   (layout/render request "about.html"))
 
-(defn get-blog-posts []
+(defn get-blog-posts [request]
   (->> (io/file "resources/blog")
        (file-seq)
        (filter #(str/ends-with? (.getName %) ".md"))
@@ -43,7 +43,7 @@
                  :slug (str/replace (.getName file) #".md$" "")
                  :content (md/md-to-html-string (str/join body))})))))
 
-(defn get-blog-menu
+(defn get-blog-menu [request]
   (layout/render request "blog.html"
                  {:blogs
                   (let [posts (get-blog-posts)]
@@ -71,6 +71,8 @@
    ["/" {:get home-page}]
    ["/papers" {:get papers-page}]
    ["/blogs" {:get get-blog-menu}]
-   ["/blog/:slug" {:get (render-blog-post slug)}]
+   ["/blog/:slug" {post: (fn [{:keys [path-params query-params body-params]}]
+                           {:status 200
+                            :body (render-blog-post (path-params slug))})}]
    ["/about" {:get about-page}]])
 
