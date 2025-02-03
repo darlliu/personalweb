@@ -1,6 +1,7 @@
 <h1 class="title"> <b>刘昱 • Yu Liu</b>'s Personal Page</h1>
 
 <div class="grid">
+<article>
 <div class="container">
 <img src="/img/yuicon.jpg" height=300px width=300px></img>
 </div>
@@ -20,8 +21,8 @@
   </div>
 </div>
 </div>
-
 </div>
+</article>
 <article>**About Me**: Software engineer at Google, AdsAI. Previously ML Engineer at LinkedIn. 
 
 PhD in Computer Science at UC Irvine (2018), BSc in Biochemistry at Rice University (2012). 

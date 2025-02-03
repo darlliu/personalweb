@@ -28,7 +28,7 @@
 
 (defn render-blog-post [request]
   (if-let [post (->> (blog/get-blog-posts)
-                     (filter #(= (:slug %) (request :slug)))
+                     (filter #(= (:slug %) (-> request :path-params :slug)))
                      first)]
     (layout/render request "home.html" {:docs (-> (post :fname) io/resource slurp)})
     (layout/error-page {:status 404
