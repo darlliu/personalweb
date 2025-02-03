@@ -2,6 +2,15 @@
 
 <div class="grid">
 <img src="/img/yuicon.jpg" height=300px width=300px></img>
+
+<div class="shark-logo">
+  <div class="shark-body">
+    <div class="tail"></div>
+    <div class="fin"></div>
+    <div class="eye"></div>
+  </div>
+  <div class="scanline"></div>
+</div>
 </div>
 <article>**About Me**: Software engineer at Google, AdsAI. Previously ML Engineer at LinkedIn. 
 
