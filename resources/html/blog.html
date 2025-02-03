@@ -1,13 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="content">
-  {{blogs}}
   <ul>
     {% for item in blogs %}
     <li>
-      <div class="container">
-        <h6> <a href="/blog/{{item.slug}}"> {{item.title}} </a> </h6> <i> {{item.date}} </i>
-      </div>
+      <a href="/blog/{{item.slug}}"> {{item.title}} </a> <i> {{item.date}} </i>
     </li>
     {% endfor %}
   </ul>
