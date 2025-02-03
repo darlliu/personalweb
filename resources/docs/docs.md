@@ -5,10 +5,20 @@
 <img src="/img/yuicon.jpg" height=300px width=300px></img>
 </div>
 <div class="container">
-  <div class="logo">
-    <div class="shark"></div>
-    <div class="logo-text">SHARK</div>
+<div class="logo-container">
+  <div class="shark">
+    <div class="fin"></div>
+    <div class="shark-body">
+      <div class="eye"></div>
+      <div class="tail"></div>
+      <div class="teeth">
+        <div class="tooth"></div>
+        <div class="tooth"></div>
+        <div class="tooth"></div>
+      </div>
+    </div>
   </div>
+</div>
 </div>
 
 </div>
