@@ -41,7 +41,8 @@
                                 (re-find #":\s*(.*)")
                                 second))
                  :fname (.getName file)
-                 :slug (str/replace (.getName file) #".md$" "")})))))
+                 :slug (str/replace (.getName file) #".md$" "")})))
+       (into [])))
 
 (defn get-blog-menu [request]
   (layout/render request "blog.html"
