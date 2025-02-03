@@ -45,7 +45,7 @@
 
 (defn get-blog-menu [request]
   (layout/render request "blog.html"
-                 {:blogs get-blog-posts}))
+                 {:blogs (get-blog-posts)}))
 
 (defn render-blog-post [request]
   (if-let [post (->> (get-blog-posts)
