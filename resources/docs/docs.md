@@ -10,19 +10,19 @@ PhD in Computer Science at UC Irvine (2018), BSc in Biochemistry at Rice Univers
 
 ML Expertise:
 
-  * Ultra large scale (petaFlops++) model training and data processing. 
-  * Industry leading large models - theoretical development and implementation.
-  * Auction, recommendation and ranking systems.
-  * Loss engineering, transfer learning, and online learning.
-  * Heterogeneous model architectures, cascading models and foundation models.
-  * Industry scale user modeling with large transformer models.
+* Ultra large scale (petaFlops++) model training and data processing. 
+* Industry leading large models - theoretical development and implementation.
+* Auction, recommendation and ranking systems.
+* Loss engineering, transfer learning, and online learning.
+* Heterogeneous model architectures, cascading models and foundation models.
+* Industry scale user modeling with large transformer models.
 
 Other Experience:
 
-  * Applicative machine learning and statistics.
-  * Bioinformatics and systems biology.
-  * Python, C++ and java.
-  * Open source ML systems.
+* Applicative machine learning and statistics.
+* Bioinformatics and systems biology.
+* Python, C++ and java.
+* Open source ML systems.
 
 I use this website to provide access to my info, contact and full papers.
 </article>
@@ -30,7 +30,7 @@ I use this website to provide access to my info, contact and full papers.
 <article>
 ###### Contact
 
-Reach me at the following links. I have no other social media presence and my research area is Bioinformatics, Genomics, Biochemistry, Search and Recommendations oriented ML - if you find someone else named *Yu Liu* it's just another person with this common romanized name.
+Reach me at the following links. I have no other social media presence.
 
 * [LinkedIn (CV available)](https://www.linkedin.com/in/yu-liu-extrainfo/)
 * [GitHub](https://github.com/darlliu)
