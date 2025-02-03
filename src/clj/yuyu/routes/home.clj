@@ -32,7 +32,7 @@
                      first)]
     (layout/render request "home.html" {:docs (-> (post :fname) io/resource slurp)})
     (layout/error-page {:status 404
-                        :title (str "Blog post not found: " request)
+                        :title (str "Blog post not found: " (-> request :path-params :slug))
                         :message "Probably devoured by the sharks :("})))
 
 (defn home-routes []
