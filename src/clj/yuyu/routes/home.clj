@@ -22,7 +22,7 @@
 (defn about-page [request]
   (layout/render request "about.html"))
 
-(defn get-blog-posts [request]
+(defn get-blog-posts []
   (->> (io/file "resources/blog")
        (file-seq)
        (filter #(str/ends-with? (.getName %) ".md"))
