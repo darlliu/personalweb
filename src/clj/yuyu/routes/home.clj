@@ -27,7 +27,7 @@
                  {:blogs (blog/get-blog-posts)}))
 
 (defn render-blog-post [request]
-  (if-let [post (->> (get-blog-posts)
+  (if-let [post (->> (blog/get-blog-posts)
                      (filter #(= (:slug %) (request :slug)))
                      first)]
     (layout/render request "home.html" {:docs (-> (post :fname) io/resource slurp)})
