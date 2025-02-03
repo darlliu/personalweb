@@ -75,6 +75,6 @@
    ["/blogs" {:get get-blog-menu}]
    ["/blog/:slug" {:post (fn [{:keys [path-params query-params body-params]}]
                            {:status 200
-                            :body (render-blog-post (path-params slug))})}]
+                            :body (render-blog-post (path-params :slug))})}]
    ["/about" {:get about-page}]])
 
