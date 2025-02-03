@@ -62,8 +62,9 @@
       [:h1 (:title post)]
       [:div (:date post)]
       [:div {:dangerouslySetInnerHTML {:__html (:content post)}}]])
-    (route/not-found "Post not found")))
-
+    (error-page {:status 404
+                 :title "Blog post not found!"
+                 :message "Probably devoured by the sharks :("})))
 
 (defn home-routes []
   [""
