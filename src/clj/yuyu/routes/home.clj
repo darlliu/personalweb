@@ -4,7 +4,7 @@
    [clojure.string :as str]
    [clojure.tools.logging :as log]
    [hiccup2.core :as hiccup]
-   [yuyu.blog :as blog]
+   [yuyu.blogs :as blog]
    [yuyu.db.core :as db]
    [yuyu.layout :as layout]
    [yuyu.middleware :as middleware]
