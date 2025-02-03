@@ -63,8 +63,8 @@
       [:div (:date post)]
       [:div {:dangerouslySetInnerHTML {:__html (:content post)}}]])
     (layout/error-page {:status 404
-                 :title "Blog post not found!"
-                 :message "Probably devoured by the sharks :("})))
+                        :title "Blog post not found!"
+                        :message "Probably devoured by the sharks :("})))
 
 (defn home-routes []
   [""
@@ -73,7 +73,7 @@
    ["/" {:get home-page}]
    ["/papers" {:get papers-page}]
    ["/blogs" {:get get-blog-menu}]
-   ["/blog/:slug" {post: (fn [{:keys [path-params query-params body-params]}]
+   ["/blog/:slug" {:post (fn [{:keys [path-params query-params body-params]}]
                            {:status 200
                             :body (render-blog-post (path-params slug))})}]
    ["/about" {:get about-page}]])
