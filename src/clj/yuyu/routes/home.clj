@@ -4,7 +4,6 @@
    [clojure.string :as str]
    [clojure.tools.logging :as log]
    [hiccup2.core :as hiccup]
-   [markdown.core :as md]
    [yuyu.db.core :as db]
    [yuyu.layout :as layout]
    [yuyu.middleware :as middleware]
@@ -41,27 +40,18 @@
                                 first
                                 (re-find #":\s*(.*)")
                                 second))
-                 :slug (str/replace (.getName file) #".md$" "")
-                 :content (md/md-to-html-string (str/join body))})))))
+                 :fname (.getName file)
+                 :slug (str/replace (.getName file) #".md$" "")})))))
 
 (defn get-blog-menu [request]
   (layout/render request "blog.html"
-                 {:blogs
-                  (let [posts (get-blog-posts)]
-                    (hiccup/html
-                     [:ul
-                      (for [post posts]
-                        [:li [:a {:href (str "/blogs/" (:slug post))} (:title post)]])]))}))
+                 {:blogs get-blog-posts}))
 
-(defn render-blog-post [slug]
+(defn render-blog-post [request]
   (if-let [post (->> (get-blog-posts)
-                     (filter #(= (:slug %) slug))
+                     (filter #(= (:slug %) (request :slug)))
                      first)]
-    (hiccup/html
-     [:div
-      [:h1 (:title post)]
-      [:div (:date post)]
-      [:div {:dangerouslySetInnerHTML {:__html (:content post)}}]])
+    (layout/render request "home.html" {:docs (-> (post :fname) io/resource slurp)})
     (layout/error-page {:status 404
                         :title "Blog post not found!"
                         :message "Probably devoured by the sharks :("})))
@@ -73,8 +63,6 @@
    ["/" {:get home-page}]
    ["/papers" {:get papers-page}]
    ["/blogs" {:get get-blog-menu}]
-   ["/blog/:slug" {:post (fn [{:keys [path-params query-params body-params]}]
-                           {:status 200
-                            :body (render-blog-post (path-params :slug))})}]
+   ["/blog/:slug" {:get render-blog-post}]
    ["/about" {:get about-page}]])
 

@@ -2,5 +2,12 @@
 {% block content %}
 <div class="content">
   {{blogs}}
+  <ul>
+    {% for item in blogs %}
+    <li>
+      <h6> <a href="/blog/{{item.slug}}"> {{item.title}} </a> </h6> <i> {{item.date}} </i>
+    </li>
+    {% endfor %}
+  </ul>
 </div>
 {% endblock %}
