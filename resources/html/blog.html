@@ -5,7 +5,9 @@
   <ul>
     {% for item in blogs %}
     <li>
-      <h6> <a href="/blog/{{item.slug}}"> {{item.title}} </a> </h6> <i> {{item.date}} </i>
+      <div class="container">
+        <h6> <a href="/blog/{{item.slug}}"> {{item.title}} </a> </h6> <i> {{item.date}} </i>
+      </div>
     </li>
     {% endfor %}
   </ul>
