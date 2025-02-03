@@ -62,7 +62,7 @@
       [:h1 (:title post)]
       [:div (:date post)]
       [:div {:dangerouslySetInnerHTML {:__html (:content post)}}]])
-    (error-page {:status 404
+    (layout/error-page {:status 404
                  :title "Blog post not found!"
                  :message "Probably devoured by the sharks :("})))
 
