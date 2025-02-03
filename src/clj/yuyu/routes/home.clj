@@ -24,7 +24,7 @@
 (defn get-blog-posts []
   (->> (io/file "blog")
        (file-seq)
-       (filter #(str/ends-with? (.getName %) ".md"))
+      ;;  (filter #(str/ends-with? (.getName %) ".md"))
        (map (fn [file]
               (let [content (slurp file)
                     [meta & body] (str/split content #"---" 3)]
