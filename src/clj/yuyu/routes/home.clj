@@ -4,6 +4,7 @@
    [clojure.string :as str]
    [clojure.tools.logging :as log]
    [hiccup2.core :as hiccup]
+   [yuyu.blog :as blog]
    [yuyu.db.core :as db]
    [yuyu.layout :as layout]
    [yuyu.middleware :as middleware]
@@ -21,32 +22,9 @@
 (defn about-page [request]
   (layout/render request "about.html"))
 
-(defn get-blog-posts []
-  (->> (-> "blog" io/resource slurp)
-       (file-seq)
-      ;;  (filter #(str/ends-with? (.getName %) ".md"))
-       (map (fn [file]
-              (let [content (slurp file)
-                    [meta & body] (str/split content #"---" 3)]
-                {:title (-> meta
-                            (str/split #"\n")
-                            (->> (filter #(str/includes? % "title:"))
-                                 first
-                                 (re-find #":\s*(.*)")
-                                 second))
-                 :date (-> meta
-                           (str/split #"\n")
-                           (->> (filter #(str/includes? % "date:"))
-                                first
-                                (re-find #":\s*(.*)")
-                                second))
-                 :fname (.getName file)
-                 :slug (str/replace (.getName file) #".md$" "")})))
-       (into [])))
-
 (defn get-blog-menu [request]
   (layout/render request "blog.html"
-                 {:blogs (get-blog-posts)}))
+                 {:blogs (blog/get-blog-posts)}))
 
 (defn render-blog-post [request]
   (if-let [post (->> (get-blog-posts)
