@@ -1,11 +1,12 @@
 (ns yuyu.routes.home
   (:require
-   [clojure.tools.logging :as log]
+   [clojure.java.io :as io]
    [clojure.string :as str]
-   [yuyu.layout :as layout]
+   [clojure.tools.logging :as log]
+   [hiccup2.core :as hiccup]
    [markdown.core :as md]
    [yuyu.db.core :as db]
-   [clojure.java.io :as io]
+   [yuyu.layout :as layout]
    [yuyu.middleware :as middleware]
    [ring.util.response]
    [ring.util.http-response :as response]))
