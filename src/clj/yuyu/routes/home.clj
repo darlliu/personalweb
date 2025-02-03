@@ -22,7 +22,7 @@
   (layout/render request "about.html"))
 
 (defn get-blog-posts []
-  (->> (io/file (io/resource "blog"))
+  (->> (-> "blog" io/resource io/file)
        (file-seq)
       ;;  (filter #(str/ends-with? (.getName %) ".md"))
        (map (fn [file]
