@@ -1,6 +1,7 @@
 (ns yuyu.routes.home
   (:require
    [clojure.tools.logging :as log]
+   [clojure.string :as str]
    [yuyu.layout :as layout]
    [markdown.core :as md]
    [yuyu.db.core :as db]
