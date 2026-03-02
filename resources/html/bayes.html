@@ -1,156 +1,193 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block page-scripts %}
-<!-- D3.js from CDN -->
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="/bayes_app/engine.js"></script>
-<script type="module" src="/bayes_app/app.js"></script>
-{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if title %}{{title}} | 刘昱{% else %}WasmBayesNet - Interactive Bayesian Network Builder{% endif %}</title>
 
-{% block content %}
-<link rel="stylesheet" href="/bayes_app/style.css">
+    <!-- SEO and OpenGraph -->
+    <meta name="description"
+        content="{% if description %}{{description}}{% else %}A serverless, client-side Bayesian Network inference engine compiled in C++ via WebAssembly and visualized via D3.js.{% endif %}">
+    <meta property="og:title"
+        content="{% if title %}{{title}} | 刘昱{% else %}WasmBayesNet - Interactive Bayesian Network Builder{% endif %}">
+    <meta property="og:description"
+        content="{% if description %}{{description}}{% else %}A serverless, client-side Bayesian Network inference engine compiled in C++ via WebAssembly and visualized via D3.js.{% endif %}">
+    <meta property="og:type" content="website">
 
-<!-- Top Navigation Bar -->
-<header class="navbar">
-    <div class="logo">
-        <span class="logo-icon">📊</span>
-        <h1>WasmBayesNet</h1>
-        <select id="theme-selector"
-            style="margin-left: 15px; padding: 4px; border-radius: 4px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); cursor: pointer;">
-            <option value="plain" style="color: black;">Classic Theme</option>
-            <option value="redstring" style="color: black;">RedString Theme</option>
-        </select>
-    </div>
-    <div class="controls">
-        <button id="btn-add-basic-node" class="btn primary">Add Basic Node</button>
-        <button id="btn-add-complex-node" class="btn primary" style="background-color: #8b5cf6;">Add Complex
-            Node</button>
-        <button id="btn-add-edge" class="btn secondary">Add Edge</button>
-        <div class="divider" style="width: 1px; height: 24px; background: rgba(255,255,255,0.2); margin: 0 10px;"></div>
-        <button id="btn-save" class="btn secondary" style="background-color: #059669;">Save Config</button>
-        <button id="btn-load" class="btn secondary" style="background-color: #059669;">Load Config</button>
-        <input type="file" id="file-load" accept=".json" style="display: none;">
-        <button id="btn-export-svg" class="btn secondary" style="background-color: #db2777;">Export Canvas</button>
-        <div class="divider" style="width: 1px; height: 24px; background: rgba(255,255,255,0.2); margin: 0 10px;"></div>
-        <button id="btn-clear" class="btn secondary">Clear Canvas</button>
-        <div class="divider" style="width: 1px; height: 24px; background: rgba(255,255,255,0.2); margin: 0 10px;"></div>
-        <select id="demo-loader" class="btn secondary"
-            style="background-color: #f59e0b; color: #1e293b; font-weight: bold; cursor: pointer; padding-right: 25px;">
-            <option value="" disabled selected>📕 Load Demo Scenario</option>
-            <option value="demo_murder.json">🔍 The Detective (Murder Mystery)</option>
-            <option value="demo_poker.json">🃏 Texas Hold'em (River Calculus)</option>
-        </select>
-        <div class="engine-status">
-            <div id="wasm-indicator" class="indicator checking"></div>
-            <span id="wasm-text">Loading WASM Engine...</span>
+    <!-- GoatCounter Analytics -->
+    <script data-goatcounter="https://yuyu.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Standalone Isolated CSS for the App -->
+    <link rel="stylesheet" href="/bayes_app/style.css">
+</head>
+
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">
+            <a href="/"
+                style="color: white; text-decoration: none; margin-right: 20px; font-size: 0.9em; opacity: 0.8; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">←
+                Back to Site</a>
+            <span class="logo-icon">📊</span>
+            <h1>WasmBayesNet</h1>
+            <select id="theme-selector"
+                style="margin-left: 15px; padding: 4px; border-radius: 4px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); cursor: pointer;">
+                <option value="plain" style="color: black;">Classic Theme</option>
+                <option value="redstring" style="color: black;">RedString Theme</option>
+            </select>
         </div>
-    </div>
-</header>
-
-<!-- Main Workspace -->
-<main class="workspace">
-    <!-- SVG Canvas for D3.js -->
-    <div class="canvas-container">
-        <svg id="network-canvas"></svg>
-    </div>
-
-    <!-- Floating Story Panel (Left) -->
-    <aside id="story-panel" class="panel left hidden" style="width: 350px;">
-        <div class="panel-header">
-            <h2 id="story-title">Scenario Guide</h2>
-            <button id="btn-close-story" class="btn-icon">✕</button>
-        </div>
-        <div class="panel-content" id="story-content" style="font-size: 0.95rem; line-height: 1.5; padding: 15px;">
-        </div>
-    </aside>
-
-    <!-- Floating UI Panel (Glassmorphism) -->
-    <aside id="properties-panel" class="panel hidden">
-        <div class="panel-header">
-            <h2 id="panel-title">Node Properties</h2>
-            <button id="btn-close-panel" class="btn-icon">✕</button>
-        </div>
-        <div class="panel-content">
-            <div class="empty-state" id="panel-empty">
-                Select a node to edit its probabilities or set evidence.
+        <div class="controls">
+            <button id="btn-add-basic-node" class="btn primary">Add Basic Node</button>
+            <button id="btn-add-complex-node" class="btn primary" style="background-color: #8b5cf6;">Add Complex
+                Node</button>
+            <button id="btn-add-edge" class="btn secondary">Add Edge</button>
+            <div class="divider" style="width: 1px; height: 24px; background: rgba(255,255,255,0.2); margin: 0 10px;">
             </div>
+            <button id="btn-save" class="btn secondary" style="background-color: #059669;">Save Config</button>
+            <button id="btn-load" class="btn secondary" style="background-color: #059669;">Load Config</button>
+            <input type="file" id="file-load" accept=".json" style="display: none;">
+            <button id="btn-export-svg" class="btn secondary" style="background-color: #db2777;">Export Canvas</button>
+            <div class="divider" style="width: 1px; height: 24px; background: rgba(255,255,255,0.2); margin: 0 10px;">
+            </div>
+            <button id="btn-clear" class="btn secondary">Clear Canvas</button>
+            <div class="divider" style="width: 1px; height: 24px; background: rgba(255,255,255,0.2); margin: 0 10px;">
+            </div>
+            <select id="demo-loader" class="btn secondary"
+                style="background-color: #f59e0b; color: #1e293b; font-weight: bold; cursor: pointer; padding-right: 25px;">
+                <option value="" disabled selected>📕 Load Demo Scenario</option>
+                <option value="demo_murder.json">🔍 The Detective (Murder Mystery)</option>
+                <option value="demo_poker.json">🃏 Texas Hold'em (River Calculus)</option>
+            </select>
+            <div class="engine-status">
+                <div id="wasm-indicator" class="indicator checking"></div>
+                <span id="wasm-text">Loading WASM Engine...</span>
+            </div>
+        </div>
+    </header>
 
-            <div id="panel-editor" class="hidden">
-                <div class="panel-header">
-                    <input type="text" id="edit-node-name" value="Node Name" class="editable-header">
-                    <button class="btn-icon" id="btn-close-panel">&times;</button>
+    <!-- Main Workspace -->
+    <main class="workspace">
+        <!-- SVG Canvas for D3.js -->
+        <div class="canvas-container">
+            <svg id="network-canvas"></svg>
+        </div>
+
+        <!-- Floating Story Panel (Left) -->
+        <aside id="story-panel" class="panel left hidden" style="width: 350px;">
+            <div class="panel-header">
+                <h2 id="story-title">Scenario Guide</h2>
+                <button id="btn-close-story" class="btn-icon">✕</button>
+            </div>
+            <div class="panel-content" id="story-content" style="font-size: 0.95rem; line-height: 1.5; padding: 15px;">
+                <!-- Narrative text injected here by JS -->
+            </div>
+        </aside>
+
+        <!-- Floating UI Panel (Glassmorphism) -->
+        <aside id="properties-panel" class="panel hidden">
+            <div class="panel-header">
+                <h2 id="panel-title">Node Properties</h2>
+                <button id="btn-close-panel" class="btn-icon">✕</button>
+            </div>
+            <div class="panel-content">
+                <div class="empty-state" id="panel-empty">
+                    Select a node to edit its probabilities or set evidence.
                 </div>
 
-                <div class="section">
-                    <h4>Evidence (Observation)</h4>
-                    <div class="toggle-group" id="evidence-controls">
+                <div id="panel-editor" class="hidden">
+                    <div class="panel-header">
+                        <input type="text" id="edit-node-name" value="Node Name" class="editable-header">
+                        <button class="btn-icon" id="btn-close-panel">&times;</button>
+                    </div>
+
+                    <div class="section">
+                        <h4>Evidence (Observation)</h4>
+                        <div class="toggle-group" id="evidence-controls">
+                            <!-- Dynamic buttons go here -->
+                        </div>
+                    </div>
+
+                    <div class="section" id="parents-section" style="display: none;">
+                        <h4>Parent Influences</h4>
+                        <div id="parents-list">
+                            <!-- Parent dropdowns will go here -->
+                        </div>
+                    </div>
+
+                    <div class="section" id="cpt-section">
+                        <div class="flex-between">
+                            <h4>Conditional Probabilities</h4>
+                        </div>
+                        <button id="btn-open-advanced-matrix" class="btn secondary"
+                            style="width: 100%; margin-top: 10px;">Open Advanced Matrix</button>
+                    </div>
+
+                    <div class="section">
+                        <h4>Marginal Probabilities</h4>
+                        <div id="marginals-container">
+                            <!-- Progress bars generated here -->
+                        </div>
                     </div>
                 </div>
-
-                <div class="section" id="parents-section" style="display: none;">
-                    <h4>Parent Influences</h4>
-                    <div id="parents-list">
-                    </div>
-                </div>
-
-                <div class="section" id="cpt-section">
-                    <div class="flex-between">
-                        <h4>Conditional Probabilities</h4>
-                    </div>
-                    <button id="btn-open-advanced-matrix" class="btn secondary"
-                        style="width: 100%; margin-top: 10px;">Open Advanced Matrix</button>
-                </div>
-
-                <div class="section">
-                    <h4>Marginal Probabilities</h4>
-                    <div id="marginals-container">
-                    </div>
+            </div>
+        </aside>
+    </main>
+    <!-- Add Complex Node Modal -->
+    <div id="add-complex-modal" class="modal hidden">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Add Complex Node</h3>
+                <button class="btn-icon" id="btn-close-complex-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Enter states for the new complex node, separated by commas (e.g., Sunny,
+                    Rainy, Foggy).</p>
+                <div class="input-group" style="margin-top: 15px;">
+                    <input type="text" id="complex-states-input" placeholder="Sunny, Rainy, Foggy"
+                        style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-panel); color: var(--text-color);">
                 </div>
             </div>
-        </div>
-    </aside>
-</main>
-
-<!-- Add Complex Node Modal -->
-<div id="add-complex-modal" class="modal hidden">
-    <div class="modal-content" style="max-width: 400px;">
-        <div class="modal-header">
-            <h3>Add Complex Node</h3>
-            <button class="btn-icon" id="btn-close-complex-modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p class="modal-description">Enter states for the new complex node, separated by commas (e.g., Sunny, Rainy,
-                Foggy).</p>
-            <div class="input-group" style="margin-top: 15px;">
-                <input type="text" id="complex-states-input" placeholder="Sunny, Rainy, Foggy"
-                    style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-panel); color: var(--text-color);">
+            <div class="modal-footer">
+                <button id="btn-cancel-complex-modal" class="btn secondary">Cancel</button>
+                <button id="btn-confirm-complex-modal" class="btn primary">Add Node</button>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button id="btn-cancel-complex-modal" class="btn secondary">Cancel</button>
-            <button id="btn-confirm-complex-modal" class="btn primary">Add Node</button>
         </div>
     </div>
-</div>
 
-<!-- Advanced Matrix Modal -->
-<div id="advanced-matrix-modal" class="modal hidden">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modal-node-name">Node Name - Advanced Matrix</h3>
-            <button class="btn-icon" id="btn-close-modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p class="modal-description">Enter exact probabilities. Each row must sum to precisely 1.0.</p>
-            <div id="modal-cpt-grid" class="cpt-grid">
+    <!-- Advanced Matrix Modal -->
+    <div id="advanced-matrix-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-node-name">Node Name - Advanced Matrix</h3>
+                <button class="btn-icon" id="btn-close-modal">&times;</button>
             </div>
-            <div id="modal-error-msg" class="error-msg hidden">Some rows do not sum to 1.0! Correct highlighted rows.
+            <div class="modal-body">
+                <p class="modal-description">Enter exact probabilities. Each row must sum to precisely 1.0.</p>
+                <div id="modal-cpt-grid" class="cpt-grid">
+                    <!-- Populated dynamically -->
+                </div>
+                <div id="modal-error-msg" class="error-msg hidden">Some rows do not sum to 1.0! Correct highlighted
+                    rows.</div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button id="btn-cancel-modal" class="btn secondary">Cancel</button>
-            <button id="btn-save-modal" class="btn primary">Save & Apply</button>
+            <div class="modal-footer">
+                <button id="btn-cancel-modal" class="btn secondary">Cancel</button>
+                <button id="btn-save-modal" class="btn primary">Save & Apply</button>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
+
+    <!-- D3.js from CDN (Zero local dependencies!) -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- WASM Module loading and App Logic -->
+    <script src="/bayes_app/engine.js"></script> <!-- Generated by Emscripten -->
+    <script type="module" src="/bayes_app/app.js"></script>
+</body>
+
+</html>
