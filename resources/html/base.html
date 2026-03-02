@@ -4,8 +4,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Welcome to Yu Liu's Homepage | 刘昱</title>
+  <title>{% if title %}{{title}} | 刘昱{% else %}Welcome to Yu Liu's Homepage | 刘昱{% endif %}</title>
+  <meta name="description"
+    content="{% if description %}{{description}}{% else %}Yu Liu's personal website, research, and technical blog.{% endif %}">
+  <meta property="og:title"
+    content="{% if title %}{{title}} | 刘昱{% else %}Welcome to Yu Liu's Homepage | 刘昱{% endif %}">
+  <meta property="og:description"
+    content="{% if description %}{{description}}{% else %}Yu Liu's personal website, research, and technical blog.{% endif %}">
+  <meta property="og:type" content="website">
 
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://yurlungur.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <!-- styles -->
   <link href='https://fonts.googleapis.com/css?family=Arbutus+Slab:400,700' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>

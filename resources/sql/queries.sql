@@ -19,3 +19,15 @@ WHERE id = :id
 -- :doc deletes a user record given the id
 DELETE FROM users
 WHERE id = :id
+
+-- :name create-comment! :! :n
+-- :doc creates a new comment record
+INSERT INTO comments
+(post_slug, author, message)
+VALUES (:post_slug, :author, :message)
+
+-- :name get-comments-by-slug :? :*
+-- :doc retrieves all comments for a given blog post slug
+SELECT * FROM comments
+WHERE post_slug = :post_slug
+ORDER BY timestamp ASC

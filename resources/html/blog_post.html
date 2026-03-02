@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content post-content"
+    style="background: var(--bg-panel); padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 class="title" style="color: var(--text-color);">{{post.title}}</h1>
+    <h3 class="subtitle is-6" style="color: var(--text-muted);">{{post.date}}</h3>
+    <hr style="background-color: var(--border-color);">
+    <div style="color: var(--text-color);">
+        {{post.body|markdown}}
+    </div>
+</div>
+
+<div class="comments-section" style="margin-top: 50px;">
+    <h3 class="title is-4" style="color: var(--text-color);">Comments</h3>
+
+    {% if not comments %}
+    <p style="color: var(--text-muted); font-style: italic;">No comments yet. Be the first to start the discussion!</p>
+    {% endif %}
+
+    {% for comment in comments %}
+    <div class="box"
+        style="margin-bottom: 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px;">
+        <article class="media">
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong style="color: var(--accent);">{{comment.author}}</strong> <small
+                            style="color: var(--text-muted); margin-left: 10px;">{{comment.timestamp|date:"yyyy-MM-dd
+                            HH:mm"}}</small>
+                        <br>
+                        <span
+                            style="color: var(--text-color); margin-top: 10px; display: inline-block;">{{comment.message}}</span>
+                    </p>
+                </div>
+            </div>
+        </article>
+    </div>
+    {% endfor %}
+
+    <div class="box"
+        style="margin-top: 30px; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 8px;">
+        <h4 class="title is-5" style="color: var(--text-color);">Leave a Reply</h4>
+        <form method="POST" action="/blog/{{post.slug}}/comment">
+            {% csrf-field %}
+            <div class="field">
+                <label class="label" style="color: var(--text-color);">Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="author" placeholder="Anonymous" required
+                        style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-color);">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" style="color: var(--text-color);">Comment</label>
+                <div class="control">
+                    <textarea class="textarea" name="message" placeholder="What are your thoughts?" required
+                        style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-color); height: 120px;"></textarea>
+                </div>
+            </div>
+            <div class="control" style="margin-top: 15px;">
+                <button class="button is-primary" type="submit"
+                    style="background: var(--accent); color: white; border: none; font-weight: bold;">Submit
+                    Reply</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
